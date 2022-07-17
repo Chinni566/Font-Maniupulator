@@ -1,3 +1,10 @@
+noseX = 0;
+noseY = 0;
+difference = 0;
+rightWristX = 0;
+leftWrsitX = 0;
+
+
 function setup(){
     video= createCapture(VIDEO);
     video.size(550,500);
@@ -9,15 +16,25 @@ function setup(){
      poseNet.on('pose', gotPoses);
     }
     
-    function gotPoses(){
-        if(results.length > 0);
-        {
-       console.log(results);
+    function gotPoses(results) {
+        if (results.length > 0) {
+            console.log(results);
+            noseX = results[0].pose.nose.x;
+            noseY = results[0].pose.nose.y;
+            console.log("noseX = " + noseX + "noseY = " + noseY);
+    
+            leftWrsitX = results[0].pose.leftWrist.x;
+            rightWristX = results[0].pose.rightWrist.x;
+            difference = floor(leftWrsitX - rightWristX);
         }
     }
     
-    function draw(){
-        background('#000000')
+    function draw() {
+        background('black');
+        fill('red');
+        stroke('red');
+        textSize(difference);
+        text('Neeraj', noseX, noseY);
     }
      
     function modelLoaded(){
